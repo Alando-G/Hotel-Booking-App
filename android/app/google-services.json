@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33715196859",
+    "project_id": "alvek001",
+    "storage_bucket": "alvek001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33715196859:android:18c064a3477760d5ef6a9e",
+        "android_client_info": {
+          "package_name": "com.example.login_signup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa1BEytNK_vBm1qra5SUGGyBy8tDmbV9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
