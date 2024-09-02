@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:login_signup/screens/Homescreen.dart';
+import 'package:login_signup/screens/homescreen.dart';
 import 'package:login_signup/screens/categories.dart';
 import 'package:login_signup/screens/profile.dart';
 import 'package:login_signup/screens/reservation.dart';
-
 import 'package:login_signup/screens/search.dart'; 
 import 'package:login_signup/screens/payment.dart';
+import 'package:login_signup/screens/view_reservations.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,8 +17,8 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _children = [
     HomeScreen(),
-    ReservationScreen(),
-    SearchScreen(),
+    SearchScreen(), // Room selection screen
+    CombinedReservationScreen(userId: '',),
     ProfileScreen(),
   ];
 
@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 244, 244, 243),
       appBar: AppBar(
-        title: const Text("Reservation"),
+        title: const Text("Home"),
         backgroundColor: Color.fromARGB(188, 250, 155, 217),
       ),
       drawer: Drawer(
@@ -67,16 +67,16 @@ class _HomeState extends State<Home> {
                 });
               },
             ),
-          ListTile(
-  title: Text("Payment Methods"),
-  leading: Icon(Icons.credit_card),
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PaymentMethodsScreen()),
-    );
-  },
-),
+            ListTile(
+              title: Text("Payment Methods"),
+              leading: Icon(Icons.credit_card),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaymentMethodsScreen()),
+                );
+              },
+            ),
             ListTile(
               title: Text("Log out"),
               leading: Icon(Icons.logout),
@@ -97,25 +97,12 @@ class _HomeState extends State<Home> {
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.hotel), label: 'Reservations'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.bed), label: 'Reservations'),
           BottomNavigationBarItem(icon: Icon(Icons.people_alt_rounded), label: 'Profile'),
         ],
         type: BottomNavigationBarType.fixed,
       ),
-    );
-  }
-}
-
-class ProjectItem extends StatelessWidget {
-  final String title;
-  final String description;
-  ProjectItem({required this.title, required this.description});
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      subtitle: Text(description),
     );
   }
 }

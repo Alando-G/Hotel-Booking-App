@@ -6,6 +6,7 @@ import 'package:login_signup/screens/categories.dart';
 import 'package:login_signup/screens/home_page.dart';
 import 'package:login_signup/screens/profile.dart';
 import 'package:login_signup/screens/search.dart';
+import 'package:login_signup/screens/roomcategory.dart';
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;

@@ -19,6 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberPassword = true;
+  bool isDarkMode = false; // Add this to manage dark mode
 
   Future<void> login() async {
     if (_formSignInKey.currentState!.validate()) {
@@ -42,9 +43,17 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  void _toggleTheme() {
+    setState(() {
+      isDarkMode = !isDarkMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      onThemeToggle: _toggleTheme,
+      isDarkMode: isDarkMode,
       child: Column(
         children: [
           const Expanded(flex: 1, child: SizedBox(height: 10)),
@@ -52,9 +61,9 @@ class _SignInScreenState extends State<SignInScreen> {
             flex: 7,
             child: Container(
               padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: isDarkMode ? Colors.black : Colors.white,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(40.0),
                   topRight: Radius.circular(40.0),
                 ),
@@ -70,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.w900,
-                          color: lightColorScheme.primary,
+                          color: isDarkMode ? Colors.white : lightColorScheme.primary,
                         ),
                       ),
                       const SizedBox(height: 40.0),
@@ -86,7 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         decoration: InputDecoration(
                           label: const Text('Email'),
                           hintText: 'Enter Email',
-                          hintStyle: const TextStyle(color: Colors.black26),
+                          hintStyle: TextStyle(color: isDarkMode ? Colors.white54 : Colors.black26),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.black12),
                             borderRadius: BorderRadius.circular(10),
@@ -108,7 +117,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         decoration: InputDecoration(
                           label: const Text('Password'),
                           hintText: 'Enter Password',
-                          hintStyle: const TextStyle(color: Colors.black26),
+                          hintStyle: TextStyle(color: isDarkMode ? Colors.white54 : Colors.black26),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.black12),
                             borderRadius: BorderRadius.circular(10),
@@ -131,9 +140,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                 },
                                 activeColor: lightColorScheme.primary,
                               ),
-                              const Text(
+                              Text(
                                 'Remember me',
-                                style: TextStyle(color: Colors.black45),
+                                style: TextStyle(color: isDarkMode ? Colors.white70 : Colors.black45),
                               ),
                             ],
                           ),
@@ -173,20 +182,20 @@ class _SignInScreenState extends State<SignInScreen> {
                           Expanded(
                             child: Divider(
                               thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
+                              color: isDarkMode ? Colors.white54 : Colors.grey.withOpacity(0.5),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               'Sign in with',
-                              style: TextStyle(color: Colors.black45),
+                              style: TextStyle(color: isDarkMode ? Colors.white70 : Colors.black45),
                             ),
                           ),
                           Expanded(
                             child: Divider(
                               thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
+                              color: isDarkMode ? Colors.white54 : Colors.grey.withOpacity(0.5),
                             ),
                           ),
                         ],
@@ -200,7 +209,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           Logo(Logos.twitter),
                           Logo(Logos.google),
                           Logo(Logos.apple),
-                          
                         ],
                       ),
                       const SizedBox(height: 25.0),
@@ -209,7 +217,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Dont have an account? ',
+                            'Don\'t have an account? ',
                             style: TextStyle(color: Colors.black45),
                           ),
                           GestureDetector(

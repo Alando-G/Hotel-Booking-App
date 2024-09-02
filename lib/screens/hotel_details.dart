@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:login_signup/screens/reservation.dart';
 import 'package:login_signup/screens/search.dart';
 
-class DestinationDetailsScreen extends StatelessWidget {
-  final String destinationCity;
+class HotelDetailsScreen extends StatelessWidget {
+  final String hotelName;
   final String imagePath;
 
-  DestinationDetailsScreen({required this.destinationCity, required this.imagePath});
+  HotelDetailsScreen({required this.hotelName, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(destinationCity),
+        title: Text(hotelName),
         backgroundColor: Colors.blue.shade700,
       ),
       body: Padding(
@@ -31,11 +31,11 @@ class DestinationDetailsScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              destinationCity,
+              hotelName,
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            // Add more details about the destination if needed
+            // Add more details about the hotel if needed
             Spacer(),
             Center(
               child: ElevatedButton(
@@ -44,7 +44,7 @@ class DestinationDetailsScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => SearchScreen(
-                
+                        
                       ),
                     ),
                   );

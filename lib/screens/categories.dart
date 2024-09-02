@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, constant_identifier_names, library_private_types_in_public_api, prefer_final_fields, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, sized_box_for_whitespace, unnecessary_string_interpolations, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:login_signup/screens/reservation.dart';
+import 'package:login_signup/screens/room_category.dart'as category;
 
-enum RoomCategory { SINGLE, DOUBLE, SUITE, DELUXE }
+
 
 void main() {
   runApp(MyApp());
@@ -312,14 +314,24 @@ class RoomDetailsPage extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  
+                  // Navigate to ReservationScreen with selected room's price and category
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReservationScreen(
+                        price: price,
+                        roomCategory: category, roomCategories: [], userId: '', hotelName: '',
+                      ),
+                    ),
+                  );
                 },
                 child: Text('Book Now'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  textStyle: TextStyle(fontSize: 18),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  textStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

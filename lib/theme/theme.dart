@@ -1,23 +1,4 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
-class DarkModeButton extends StatelessWidget {
-  final bool isDarkMode;
-  final VoidCallback onPressed;
-
-  const DarkModeButton({required this.isDarkMode, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isDarkMode ? Icons.light_mode : Icons.dark_mode,
-        color: isDarkMode ? Colors.white : Colors.black,
-      ),
-      onPressed: onPressed,
-    );
-  }
-}
 
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,

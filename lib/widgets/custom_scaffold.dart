@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomScaffold extends StatelessWidget {
-  const CustomScaffold({super.key, this.child});
+  const CustomScaffold({
+    super.key, 
+    this.child,
+    required this.onThemeToggle,
+    required this.isDarkMode,
+  });
+
   final Widget? child;
+  final VoidCallback onThemeToggle;
+  final bool isDarkMode;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,6 +19,15 @@ class CustomScaffold extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              color: Colors.white,
+            ),
+            onPressed: onThemeToggle,
+          ),
+        ],
       ),
       extendBodyBehindAppBar: true,
       body: Stack(

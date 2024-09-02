@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:login_signup/screens/signin_screen.dart';
 import 'package:login_signup/theme/theme.dart';
 import 'package:login_signup/widgets/custom_scaffold.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -20,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController confirmPasswordController = TextEditingController();
   bool agreePersonalData = true;
   bool hideText = true;
+  bool isDarkMode = false; // Add this to manage dark mode
 
   Future<void> register() async {
     if (_formSignupKey.currentState!.validate()) {
@@ -44,15 +45,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'An error occurredf')),
+          SnackBar(content: Text(e.message ?? 'An error occurred')),
         );
       }
     }
   }
 
+  void _toggleTheme() {
+    setState(() {
+      isDarkMode = !isDarkMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      onThemeToggle: _toggleTheme,
+      isDarkMode: isDarkMode,
       child: Column(
         children: [
           const Expanded(flex: 1, child: SizedBox(height: 10)),

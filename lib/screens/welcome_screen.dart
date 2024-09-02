@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:login_signup/screens/signin_screen.dart';
-import 'package:login_signup/screens/signup_screen.dart';
 import 'package:login_signup/theme/theme.dart';
 import 'package:login_signup/widgets/custom_scaffold.dart';
 import 'package:login_signup/widgets/welcome_button.dart';
+import 'package:login_signup/screens/signin_screen.dart';
+import 'package:login_signup/screens/signup_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool _isDarkMode = false;
+
+  void _toggleTheme() {
+    setState(() {
+      _isDarkMode = !_isDarkMode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      onThemeToggle: _toggleTheme,
+      isDarkMode: _isDarkMode,
       child: Column(
         children: [
           Flexible(
@@ -36,7 +51,6 @@ class WelcomeScreen extends StatelessWidget {
                                 '\nEnter personal details to your employee account',
                             style: TextStyle(
                               fontSize: 20,
-                              // height: 0,
                             ))
                       ],
                     ),

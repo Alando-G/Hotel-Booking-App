@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_signup/screens/destination_details_screen.dart';
+import 'package:login_signup/screens/hotel_details.dart'; // Import the hotel details screen
+import 'package:login_signup/screens/destination_details_screen.dart'; // Import the destination details screen
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -30,12 +33,9 @@ class HomeScreen extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget>[
-              _buildHotelCard(context, 'Hotel Sunshine',
-                  'assets/images/hotel1.jpg', '/hotelDetails'),
-              _buildHotelCard(context, 'Hotel Comfort',
-                  'assets/images/hotel2.jpg', '/hotelDetails'),
-              _buildHotelCard(context, 'Hotel Luxury',
-                  'assets/images/hotel3.jpg', '/hotelDetails'),
+              _buildHotelCard(context, 'Hotel Sunshine', 'assets/images/hotel1.jpg'),
+              _buildHotelCard(context, 'Hotel Comfort', 'assets/images/hotel2.jpg'),
+              _buildHotelCard(context, 'Hotel Luxury', 'assets/images/hotel3.jpg'),
             ],
           ),
         ),
@@ -43,11 +43,15 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHotelCard(
-      BuildContext context, String name, String imagePath, String route) {
+  Widget _buildHotelCard(BuildContext context, String name, String imagePath) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route, arguments: {'hotelName': name});
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HotelDetailsScreen(hotelName: name, imagePath: imagePath),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8.0),
@@ -93,19 +97,16 @@ class HomeScreen extends StatelessWidget {
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         SizedBox(height: 10),
-        _buildOfferCard(context, 'Get 20% off on your first booking',
-            'Use code: FIRST20', Icons.local_offer, Colors.red, '/offers'),
-        _buildOfferCard(context, 'Weekend Getaway: 15% off',
-            'Book by this weekend', Icons.beach_access, Colors.blue, '/offers'),
+        _buildOfferCard(context, 'Get 20% off on your first booking', 'Use code: FIRST20', Icons.local_offer, Colors.red),
+        _buildOfferCard(context, 'Weekend Getaway: 15% off', 'Book by this weekend', Icons.beach_access, Colors.blue),
       ],
     );
   }
 
-  Widget _buildOfferCard(BuildContext context, String title, String subtitle,
-      IconData icon, Color iconColor, String route) {
+  Widget _buildOfferCard(BuildContext context, String title, String subtitle, IconData icon, Color iconColor) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route, arguments: {'offerTitle': title});
+        // Navigate to offers page
       },
       child: Card(
         elevation: 4,
@@ -147,20 +148,22 @@ class HomeScreen extends StatelessWidget {
               {'city': 'Tokyo', 'image': 'assets/images/tokyo.jpg'},
               {'city': 'London', 'image': 'assets/images/london.jpg'},
             ];
-            return _buildDestinationCard(context, destinations[index]['city']!,
-                destinations[index]['image']!, '/destinationDetails');
+            return _buildDestinationCard(context, destinations[index]['city']!, destinations[index]['image']!);
           },
         ),
       ],
     );
   }
 
-  Widget _buildDestinationCard(
-      BuildContext context, String city, String imagePath, String route) {
+  Widget _buildDestinationCard(BuildContext context, String city, String imagePath) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route,
-            arguments: {'destinationCity': city});
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DestinationDetailsScreen(destinationCity: city, imagePath: imagePath),
+          ),
+        );
       },
       child: Card(
         elevation: 4,

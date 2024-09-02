@@ -1,20 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:login_signup/screens/categories.dart';
+import 'package:intl/intl.dart';
 
-
-enum RoomCategory{
+enum RoomCategory {
   SINGLE,
   DOUBLE,
   DELUXE,
   SUITE,
 }
+
 class ReservationScreen extends StatefulWidget {
-  
-final double price;
-  final RoomCategory;
-  ReservationScreen({required this.price, required this.RoomCategory, required category});
+  final double price;
+  final RoomCategory roomCategory;
+  final String userId;
 
-
+  ReservationScreen({required this.price, required this.roomCategory, required this.userId, required String hotelName, required List roomCategories});
 
   @override
   _ReservationScreenState createState() => _ReservationScreenState();
@@ -28,125 +28,149 @@ class _ReservationScreenState extends State<ReservationScreen> {
   DateTime _checkInDate = DateTime.now();
   DateTime _checkOutDate = DateTime.now().add(Duration(days: 1));
 
+  double get _totalPrice {
+    int numberOfNights = _checkOutDate.difference(_checkInDate).inDays;
+    return numberOfNights * widget.price;
+  }
+
+  Future<void> _submitReservation() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      // Store the reservation in Firestore
+      await FirebaseFirestore.instance.collection('reservations').add({
+        'userId': widget.userId,
+        'name': _name,
+        'email': _email,
+        'phoneNumber': _phoneNumber,
+        'checkInDate': _checkInDate,
+        'checkOutDate': _checkOutDate,
+        'roomCategory': widget.roomCategory.toString(),
+        'totalPrice': _totalPrice,
+      });
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Reservation successful!')),
+      );
+
+      // Navigate back to CombinedReservationScreen
+      Navigator.pop(context, true); // Pass a value to indicate that a reservation was made
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Make a Reservation'),
+        title: Text('Reservation'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _name = value!,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _email = value!,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Phone Number'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _phoneNumber = value!,
-              ),
-              Row(
-                children: [
-                  Text('Check-in Date: '),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: _checkInDate,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2100),
-                      );
-                      if (picked != null) {
-                        setState(() {
-                          _checkInDate = picked;
-                        });
-                      }
-                    },
-                    child: Text(_checkInDate.toString().split(' ').first),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Make a Reservation',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text('Check-out Date: '),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: _checkOutDate,
-                        firstDate: _checkInDate.add(Duration(days: 1)),
-                        lastDate: DateTime(2100),
-                      );
-                      if (picked != null) {
-                        setState(() {
-                          _checkOutDate = picked;
-                        });
-                      }
-                    },
-                    child: Text(_checkOutDate.toString().split(' ').first),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Make API call or database query to save the reservation
-                    // For demonstration purposes, just print the reservation details
-                    print('Reservation made for:');
-                    print('Name: $_name');
-                    print('Email: $_email');
-                    print('Phone Number: $_phoneNumber');
-                    print('Check-in Date: ${_checkInDate.toString().split(' ').first}');
-                    print('Check-out Date: ${_checkOutDate.toString().split(' ').first}');
-                    print('Price: \$${widget.price.toString()}');
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Make Reservation'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  textStyle: TextStyle(fontSize: 18),
                 ),
-              ),
-            ],
+                SizedBox(height: 30),
+                _buildTextField('Name', onSaved: (value) => _name = value!),
+                SizedBox(height: 20),
+                _buildTextField('Email', onSaved: (value) => _email = value!),
+                SizedBox(height: 20),
+                _buildTextField('Phone Number', onSaved: (value) => _phoneNumber = value!),
+                SizedBox(height: 30),
+                _buildDateSelector('Check-in Date', _checkInDate, (newDate) {
+                  setState(() {
+                    _checkInDate = newDate;
+                    if (_checkOutDate.isBefore(_checkInDate)) {
+                      _checkOutDate = _checkInDate.add(Duration(days: 1));
+                    }
+                  });
+                }),
+                SizedBox(height: 20),
+                _buildDateSelector('Check-out Date', _checkOutDate, (newDate) {
+                  setState(() {
+                    _checkOutDate = newDate;
+                  });
+                }, firstDate: _checkInDate.add(Duration(days: 1))),
+                SizedBox(height: 40),
+                Text(
+                  'Total Price: \$${_totalPrice.toStringAsFixed(2)}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 40),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: _submitReservation,
+                    child: Text('Confirm Reservation'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(String label, {required Function(String?) onSaved}) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your $label';
+        }
+        return null;
+      },
+      onSaved: onSaved,
+    );
+  }
+
+  Widget _buildDateSelector(String label, DateTime selectedDate, Function(DateTime) onDateSelected, {DateTime? firstDate}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '$label:',
+          style: TextStyle(fontSize: 18),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: selectedDate,
+              firstDate: firstDate ?? DateTime.now(),
+              lastDate: DateTime(2101),
+            );
+            if (pickedDate != null) {
+              onDateSelected(pickedDate);
+            }
+          },
+          child: Text(DateFormat.yMMMd().format(selectedDate)),
+        ),
+      ],
     );
   }
 }

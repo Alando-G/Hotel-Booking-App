@@ -1,249 +1,144 @@
 import 'package:flutter/material.dart';
+import 'package:login_signup/screens/reservation.dart';
 
-class SearchScreen extends StatefulWidget {
-  @override
-  _SearchScreenState createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
-  String _location = '';
-  DateTime _checkInDate = DateTime.now();
-  DateTime _checkOutDate = DateTime.now().add(Duration(days: 1));
-  int _guests = 1;
-
-  final TextEditingController _locationController = TextEditingController();
-
-  void _search() {
-    // Handle the search logic here
-    // For example, navigate to a results screen with the search parameters
-  }
-
+class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue.shade100, Colors.blue.shade300],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      appBar: AppBar(
+        title: Text(
+          "Search for Rooms",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildLocationField(),
-              SizedBox(height: 16),
-              _buildDateSelector('Check-in Date', _checkInDate, (selectedDate) {
-                if (selectedDate != null) {
-                  setState(() {
-                    _checkInDate = selectedDate;
-                  });
-                }
-              }),
-              SizedBox(height: 16),
-              _buildDateSelector('Check-out Date', _checkOutDate, (selectedDate) {
-                if (selectedDate != null) {
-                  setState(() {
-                    _checkOutDate = selectedDate;
-                  });
-                }
-              }),
-              SizedBox(height: 16),
-              _buildGuestsSelector(),
-              SizedBox(height: 32),
-              Center(
-                child: ElevatedButton(
-                  onPressed: _search,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 14, 13, 13), // Text color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                    elevation: 5,
-                  ),
-                  child: Text('Search', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                ),
-              ),
-            ],
-          ),
-        ),
+        backgroundColor: Colors.blue.shade700,
+        elevation: 0,
       ),
-    );
-  }
-
-  Widget _buildLocationField() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: _locationController,
-        decoration: InputDecoration(
-          labelText: 'Location',
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          prefixIcon: Icon(Icons.search, color: Colors.blueAccent),
-        ),
-        onChanged: (value) {
-          setState(() {
-            _location = value;
-          });
-        },
-      ),
-    );
-  }
-
-  Widget _buildDateSelector(String label, DateTime selectedDate, ValueChanged<DateTime?> onDateSelected) {
-    return GestureDetector(
-      onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: selectedDate,
-          firstDate: DateTime.now(),
-          lastDate: DateTime(2100),
-        );
-        onDateSelected(pickedDate);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 6,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: InputDecorator(
-          decoration: InputDecoration(
-            labelText: label,
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          ),
-          child: Row(
-            children: [
-              Icon(Icons.calendar_today, color: Colors.blueAccent),
-              SizedBox(width: 12),
-              Text(
-                '${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.year}',
-                style: TextStyle(fontSize: 16),
-              ),
-              Spacer(),
-              Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGuestsSelector() {
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Select Number of Guests'),
-              content: NumberPicker(
-                minValue: 1,
-                maxValue: 10,
-                value: _guests,
-                onChanged: (value) {
-                  setState(() {
-                    _guests = value;
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            );
-          },
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 6,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: InputDecorator(
-          decoration: InputDecoration(
-            labelText: 'Guests',
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          ),
-          child: Row(
-            children: [
-              Icon(Icons.people, color: Colors.blueAccent),
-              SizedBox(width: 12),
-              Text('$_guests Guests', style: TextStyle(fontSize: 16)),
-              Spacer(),
-              Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class NumberPicker extends StatelessWidget {
-  final int minValue;
-  final int maxValue;
-  final int value;
-  final ValueChanged<int> onChanged;
-
-  NumberPicker({
-    required this.minValue,
-    required this.maxValue,
-    required this.value,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
           children: [
-            IconButton(
-              icon: Icon(Icons.remove, color: Colors.deepOrangeAccent),
-              onPressed: value > minValue
-                  ? () => onChanged(value - 1)
-                  : null,
+            _buildRoomCard(
+              context,
+              'Single Room',
+              'A cozy room ideal for solo travelers.',
+              50.0,
+              'assets/images/single_room.jpg', // Add a relevant image asset
+              RoomCategory.SINGLE,
             ),
-            Text('$value', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            IconButton(
-              icon: Icon(Icons.add, color: Colors.deepOrangeAccent),
-              onPressed: value < maxValue
-                  ? () => onChanged(value + 1)
-                  : null,
+            _buildRoomCard(
+              context,
+              'Double Room',
+              'A spacious room perfect for couples or friends.',
+              80.0,
+              'assets/images/double_room.jpg', // Add a relevant image asset
+              RoomCategory.DOUBLE,
+            ),
+            _buildRoomCard(
+              context,
+              'Suite',
+              'An elegant suite with luxurious amenities.',
+              150.0,
+              'assets/images/suite.jpg', // Add a relevant image asset
+              RoomCategory.SUITE,
+            ),
+            _buildRoomCard(
+              context,
+              'Deluxe Room',
+              'An opulent room with premium features.',
+              200.0,
+              'assets/images/deluxe_room.jpg', // Add a relevant image asset
+              RoomCategory.DELUXE,
             ),
           ],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildRoomCard(
+      BuildContext context,
+      String title,
+      String description,
+      double price,
+      String imagePath,
+      RoomCategory roomCategory) {
+    return Card(
+      elevation: 8.0,
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ReservationScreen(
+                roomCategory: roomCategory,
+                price: price,
+                userId: '', hotelName: '', roomCategories: [], // Add the relevant userId logic here
+              ),
+            ),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+              child: Image.asset(
+                imagePath,
+                height: 180.0,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue.shade900,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\$$price/night',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade700,
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios, color: Colors.blue.shade700),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
