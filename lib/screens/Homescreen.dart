@@ -4,15 +4,17 @@ import 'package:login_signup/screens/hotel_details.dart'; // Import the hotel de
 import 'package:login_signup/screens/destination_details_screen.dart'; // Import the destination details screen
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       children: <Widget>[
         _buildFeaturedHotels(context),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         _buildSpecialOffers(context),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         _buildPopularDestinations(context),
       ],
     );
@@ -22,13 +24,13 @@ class HomeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Featured Hotels',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
-        SizedBox(height: 10),
-        Container(
+        const SizedBox(height: 10),
+        SizedBox(
           height: 220,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -54,7 +56,7 @@ class HomeScreen extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         width: 160,
         child: Card(
           elevation: 8,
@@ -65,7 +67,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
                 child: Image.asset(
                   imagePath,
                   width: double.infinity,
@@ -77,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   name,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -91,12 +93,12 @@ class HomeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Special Offers',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         _buildOfferCard(context, 'Get 20% off on your first booking', 'Use code: FIRST20', Icons.local_offer, Colors.red),
         _buildOfferCard(context, 'Weekend Getaway: 15% off', 'Book by this weekend', Icons.beach_access, Colors.blue),
       ],
@@ -110,12 +112,12 @@ class HomeScreen extends StatelessWidget {
       },
       child: Card(
         elevation: 4,
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
         child: ListTile(
           leading: Icon(icon, size: 40, color: iconColor),
-          title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(subtitle),
-          contentPadding: EdgeInsets.all(16.0),
+          contentPadding: const EdgeInsets.all(16.0),
         ),
       ),
     );
@@ -125,16 +127,16 @@ class HomeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Popular Destinations',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10.0,
             mainAxisSpacing: 10.0,
@@ -174,7 +176,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
               child: Image.asset(
                 imagePath,
                 width: double.infinity,
@@ -186,7 +188,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 city,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ],

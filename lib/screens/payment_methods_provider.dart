@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PaymentMethodsProvider with ChangeNotifier {
-  List<Map<String, String>> _paymentMethods = [];
+  final List<Map<String, String>> _paymentMethods = [];
 
   List<Map<String, String>> get paymentMethods => _paymentMethods;
 

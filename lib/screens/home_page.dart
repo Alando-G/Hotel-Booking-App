@@ -8,6 +8,8 @@ import 'package:login_signup/screens/payment.dart';
 import 'package:login_signup/screens/view_reservations.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -25,24 +27,24 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 244, 244, 243),
+      backgroundColor: const Color.fromARGB(255, 244, 244, 243),
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: Color.fromARGB(188, 250, 155, 217),
+        backgroundColor: const Color.fromARGB(188, 250, 155, 217),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              child: Text('Alztec'),
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Color.fromARGB(188, 250, 155, 217),
               ),
+              child: Text('Alztec'),
             ),
             ListTile(
-              title: Text("Home"),
-              leading: Icon(Icons.home),
+              title: const Text("Home"),
+              leading: const Icon(Icons.home),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -51,15 +53,15 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text("Categories"),
-              leading: Icon(Icons.category),
+              title: const Text("Categories"),
+              leading: const Icon(Icons.category),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => CategoriesPage()));
               },
             ),
             ListTile(
-              title: Text("Reservations"),
-              leading: Icon(Icons.hotel),
+              title: const Text("Reservations"),
+              leading: const Icon(Icons.hotel),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -68,8 +70,8 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text("Payment Methods"),
-              leading: Icon(Icons.credit_card),
+              title: const Text("Payment Methods"),
+              leading: const Icon(Icons.credit_card),
               onTap: () {
                 Navigator.push(
                   context,
@@ -78,8 +80,8 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text("Log out"),
-              leading: Icon(Icons.logout),
+              title: const Text("Log out"),
+              leading: const Icon(Icons.logout),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -95,7 +97,7 @@ class _HomeState extends State<Home> {
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(icon: Icon(Icons.bed), label: 'Reservations'),

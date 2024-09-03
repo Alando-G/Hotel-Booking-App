@@ -5,7 +5,7 @@ import 'payment_methods_provider.dart';
 class CardDetailsScreen extends StatefulWidget {
   final String methodType;
 
-  CardDetailsScreen({required this.methodType});
+  const CardDetailsScreen({super.key, required this.methodType});
 
   @override
   _CardDetailsScreenState createState() => _CardDetailsScreenState();
@@ -42,7 +42,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
-        title: Text('Enter ${widget.methodType} Details', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        title: Text('Enter ${widget.methodType} Details', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.blueAccent,
         elevation: 0,
       ),
@@ -54,38 +54,38 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
             if (widget.methodType == 'Card') ...[
               TextField(
                 controller: _cardNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Card Number',
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
                 controller: _cardHolderController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Card Holder Name',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: _expiryDateController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Expiry Date (MM/YY)',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.datetime,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: TextField(
                       controller: _cvvController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'CVV',
                         border: OutlineInputBorder(),
                       ),
@@ -97,7 +97,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
             ] else if (widget.methodType == 'PayPal') ...[
               TextField(
                 controller: _paypalEmailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'PayPal Email',
                   border: OutlineInputBorder(),
                 ),
@@ -106,14 +106,14 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
             ] else if (widget.methodType == 'Google Pay') ...[
               TextField(
                 controller: _googlePayNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Google Pay Number',
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
               ),
             ],
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -124,9 +124,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   ),
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: _saveCardDetails,
@@ -135,9 +135,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   ),
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
               ],
             ),

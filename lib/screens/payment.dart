@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'payment_methods_provider.dart';
 
 class PaymentMethodsScreen extends StatelessWidget {
+  const PaymentMethodsScreen({super.key});
+
   void _addPaymentMethod(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -22,23 +24,23 @@ class PaymentMethodsScreen extends StatelessWidget {
 
   Widget _buildPaymentMethodSelector(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: Icon(Icons.credit_card, color: Colors.blueAccent),
-            title: Text('Credit/Debit Card'),
+            leading: const Icon(Icons.credit_card, color: Colors.blueAccent),
+            title: const Text('Credit/Debit Card'),
             onTap: () => _onPaymentMethodSelected(context, 'Card'),
           ),
           ListTile(
-            leading: Icon(Icons.paypal, color: Colors.blueAccent),
-            title: Text('PayPal'),
+            leading: const Icon(Icons.paypal, color: Colors.blueAccent),
+            title: const Text('PayPal'),
             onTap: () => _onPaymentMethodSelected(context, 'PayPal'),
           ),
           ListTile(
-            leading: Icon(Icons.payment, color: Colors.blueAccent),
-            title: Text('Google Pay'),
+            leading: const Icon(Icons.payment, color: Colors.blueAccent),
+            title: const Text('Google Pay'),
             onTap: () => _onPaymentMethodSelected(context, 'Google Pay'),
           ),
         ],
@@ -56,7 +58,7 @@ class PaymentMethodsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Payment Methods',
                 style: TextStyle(
                   fontSize: 32,
@@ -64,7 +66,7 @@ class PaymentMethodsScreen extends StatelessWidget {
                   color: Colors.blueAccent,
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Expanded(
                 child: ListView.builder(
                   itemCount: provider.paymentMethods.length,
@@ -73,7 +75,7 @@ class PaymentMethodsScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Center(
                 child: ElevatedButton(
                   onPressed: () => _addPaymentMethod(context),
@@ -82,10 +84,10 @@ class PaymentMethodsScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                     elevation: 8,
                   ),
-                  child: Text('Add Payment Method', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: const Text('Add Payment Method', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -99,11 +101,11 @@ class PaymentMethodsScreen extends StatelessWidget {
     final provider = Provider.of<PaymentMethodsProvider>(context);
     final paymentMethod = provider.paymentMethods[index];
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 8,
@@ -112,18 +114,18 @@ class PaymentMethodsScreen extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.all(16),
-        leading: Icon(Icons.credit_card, color: Colors.blueAccent, size: 36),
+        contentPadding: const EdgeInsets.all(16),
+        leading: const Icon(Icons.credit_card, color: Colors.blueAccent, size: 36),
         title: Text(
           paymentMethod['type']!,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
         ),
         subtitle: Text(
           paymentMethod['number']!,
           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.redAccent),
+          icon: const Icon(Icons.delete, color: Colors.redAccent),
           onPressed: () => provider.removePaymentMethod(index),
         ),
       ),

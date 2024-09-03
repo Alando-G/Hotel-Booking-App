@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: lightMode,
       home: const WelcomeScreen(),
-      routes: {
+      routes: const {
         
 
       }

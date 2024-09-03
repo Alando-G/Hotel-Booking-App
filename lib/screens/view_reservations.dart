@@ -6,7 +6,7 @@ import 'package:login_signup/screens/reservation.dart';
 class CombinedReservationScreen extends StatefulWidget {
   final String userId; 
 
-  CombinedReservationScreen({required this.userId});
+  const CombinedReservationScreen({super.key, required this.userId});
 
   @override
   _CombinedReservationScreenState createState() => _CombinedReservationScreenState();
@@ -33,7 +33,7 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
           .get(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
@@ -41,11 +41,11 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'No Reservations Found',
                   style: TextStyle(fontSize: 18),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -53,12 +53,12 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
                       MaterialPageRoute(
                         builder: (context) => ReservationScreen(
                           price: 0, // Default price logic
-                          roomCategory: RoomCategory.SINGLE, userId: '', roomCategories: [], hotelName: '', // Default selection
+                          roomCategory: RoomCategory.SINGLE, userId: '', roomCategories: const [], hotelName: '', // Default selection
                         ),
                       ),
                     );
                   },
-                  child: Text('Make a Reservation'),
+                  child: const Text('Make a Reservation'),
                 ),
               ],
             ),
@@ -73,7 +73,7 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
             final reservation = reservations[index];
 
             return ListTile(
-              leading: Icon(Icons.hotel, color: Colors.blue),
+              leading: const Icon(Icons.hotel, color: Colors.blue),
               title: Text(reservation['name']),
               subtitle: Text('Check-in: ${DateFormat.yMMMd().format(reservation['checkInDate'].toDate())}'),
               trailing: Text('\$${reservation['totalPrice']}'),
@@ -92,7 +92,7 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
 
   Widget _buildReservationDetails() {
     if (_selectedReservation == null) {
-      return Center(child: Text('No reservation selected'));
+      return const Center(child: Text('No reservation selected'));
     }
 
     final reservation = _selectedReservation!;
@@ -104,17 +104,17 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: Icon(Icons.receipt_long, size: 80, color: Colors.blue),
             ),
-            SizedBox(height: 20),
-            Center(
+            const SizedBox(height: 20),
+            const Center(
               child: Text(
                 'Reservation Details',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildDetailRow(Icons.person, 'Name', reservation['name']),
             _buildDetailRow(Icons.email, 'Email', reservation['email']),
             _buildDetailRow(Icons.phone, 'Phone Number', reservation['phoneNumber']),
@@ -124,7 +124,7 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
                 DateFormat.yMMMd().format(reservation['checkOutDate'].toDate())),
             _buildDetailRow(Icons.king_bed, 'Room Category', roomCategory),
             _buildDetailRow(Icons.attach_money, 'Total Price', '\$${reservation['totalPrice']}'),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -133,7 +133,7 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
                     _selectedReservation = null;
                   });
                 },
-                child: Text('Back to List'),
+                child: const Text('Back to List'),
               ),
             ),
           ],
@@ -148,11 +148,11 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
       child: Row(
         children: [
           Icon(icon, color: Colors.blue, size: 30),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Text(
               '$label: $value',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
         ],

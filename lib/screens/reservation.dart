@@ -14,7 +14,7 @@ class ReservationScreen extends StatefulWidget {
   final RoomCategory roomCategory;
   final String userId;
 
-  ReservationScreen({required this.price, required this.roomCategory, required this.userId, required String hotelName, required List roomCategories});
+  const ReservationScreen({super.key, required this.price, required this.roomCategory, required this.userId, required String hotelName, required List roomCategories});
 
   @override
   _ReservationScreenState createState() => _ReservationScreenState();
@@ -26,7 +26,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   String _email = '';
   String _phoneNumber = '';
   DateTime _checkInDate = DateTime.now();
-  DateTime _checkOutDate = DateTime.now().add(Duration(days: 1));
+  DateTime _checkOutDate = DateTime.now().add(const Duration(days: 1));
 
   double get _totalPrice {
     int numberOfNights = _checkOutDate.difference(_checkInDate).inDays;
@@ -51,7 +51,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Reservation successful!')),
+        const SnackBar(content: Text('Reservation successful!')),
       );
 
       // Navigate back to CombinedReservationScreen
@@ -63,7 +63,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reservation'),
+        title: const Text('Reservation'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -77,49 +77,49 @@ class _ReservationScreenState extends State<ReservationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Make a Reservation',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 _buildTextField('Name', onSaved: (value) => _name = value!),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildTextField('Email', onSaved: (value) => _email = value!),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildTextField('Phone Number', onSaved: (value) => _phoneNumber = value!),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 _buildDateSelector('Check-in Date', _checkInDate, (newDate) {
                   setState(() {
                     _checkInDate = newDate;
                     if (_checkOutDate.isBefore(_checkInDate)) {
-                      _checkOutDate = _checkInDate.add(Duration(days: 1));
+                      _checkOutDate = _checkInDate.add(const Duration(days: 1));
                     }
                   });
                 }),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildDateSelector('Check-out Date', _checkOutDate, (newDate) {
                   setState(() {
                     _checkOutDate = newDate;
                   });
-                }, firstDate: _checkInDate.add(Duration(days: 1))),
-                SizedBox(height: 40),
+                }, firstDate: _checkInDate.add(const Duration(days: 1))),
+                const SizedBox(height: 40),
                 Text(
                   'Total Price: \$${_totalPrice.toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Center(
                   child: ElevatedButton(
                     onPressed: _submitReservation,
-                    child: Text('Confirm Reservation'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
+                    child: Text('Confirm Reservation'),
                   ),
                 ),
               ],
@@ -154,7 +154,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       children: [
         Text(
           '$label:',
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
         ElevatedButton(
           onPressed: () async {

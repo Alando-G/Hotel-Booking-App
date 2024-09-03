@@ -5,11 +5,12 @@ import 'package:login_signup/screens/Homescreen.dart';
 import 'package:login_signup/screens/categories.dart';
 import 'package:login_signup/screens/home_page.dart';
 import 'package:login_signup/screens/profile.dart';
+import 'package:login_signup/screens/room_category.dart';
 import 'package:login_signup/screens/search.dart';
-import 'package:login_signup/screens/roomcategory.dart';
+
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   final List<Widget> _children = [
     HomeScreen(),
@@ -28,6 +29,8 @@ class _HomeState extends State<Home> {
 }
 
 class CategorySelectionScreen extends StatefulWidget {
+  const CategorySelectionScreen({super.key});
+
   @override
   _CategorySelectionScreenState createState() => _CategorySelectionScreenState();
 }
@@ -40,7 +43,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Select Room Category"),
+        title: const Text("Select Room Category"),
       ),
       body: Column(
         children: [
@@ -51,28 +54,28 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 _selectedCategory = value!;
               });
             },
-            items: [
+            items: const [
               DropdownMenuItem(
-                child: Text("Category 1"),
                 value: RoomCategory.SINGLE,
+                child: Text("Category 1"),
               ),
               DropdownMenuItem(
-                child: Text("Category 2"),
                 value: RoomCategory.DOUBLE,
+                child: Text("Category 2"),
               ),
                DropdownMenuItem(
-                child: Text("Category 2"),
                 value: RoomCategory.DELUXE,
+                child: Text("Category 2"),
               ),
                DropdownMenuItem(
-                child: Text("Category 2"),
                 value: RoomCategory.SUITE,
+                child: Text("Category 2"),
               ),
               // Add more categories as needed
             ],
           ),
           TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Price",
             ),
             onChanged: (value) {
@@ -82,7 +85,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
             },
           ),
           ElevatedButton(
-            child: Text("Next"),
+            child: const Text("Next"),
             onPressed: () {
               Navigator.push(
                 context,

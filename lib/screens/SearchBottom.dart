@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:login_signup/screens/search.dart';
 
 class SearchBottomNavigationBarScreen extends StatefulWidget {
+  const SearchBottomNavigationBarScreen({super.key});
+
   @override
   _SearchBottomNavigationBarScreenState createState() => _SearchBottomNavigationBarScreenState();
 }
@@ -20,7 +22,7 @@ class _SearchBottomNavigationBarScreenState extends State<SearchBottomNavigation
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           // Add more items as needed
         ],
@@ -34,7 +36,7 @@ class _SearchBottomNavigationBarScreenState extends State<SearchBottomNavigation
         return SearchScreen(); // Replace with your search screen
       // Add more cases as needed
       default:
-        return Center(child: Text('No screen for this index'));
+        return const Center(child: Text('No screen for this index'));
     }
   }
 }

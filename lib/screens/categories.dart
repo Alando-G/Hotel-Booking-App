@@ -320,7 +320,7 @@ class RoomDetailsPage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => ReservationScreen(
                         price: price,
-                        roomCategory: category, roomCategories: [], userId: '', hotelName: '',
+                        roomCategory: category, roomCategories: const [], userId: '', hotelName: '',
                       ),
                     ),
                   );

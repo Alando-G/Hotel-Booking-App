@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:login_signup/screens/reservation.dart';
 
 class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Search for Rooms",
           style: TextStyle(
             fontSize: 24,
@@ -68,7 +70,7 @@ class SearchScreen extends StatelessWidget {
       RoomCategory roomCategory) {
     return Card(
       elevation: 8.0,
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -80,7 +82,7 @@ class SearchScreen extends StatelessWidget {
               builder: (context) => ReservationScreen(
                 roomCategory: roomCategory,
                 price: price,
-                userId: '', hotelName: '', roomCategories: [], // Add the relevant userId logic here
+                userId: '', hotelName: '', roomCategories: const [], // Add the relevant userId logic here
               ),
             ),
           );
@@ -89,7 +91,7 @@ class SearchScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
               child: Image.asset(
                 imagePath,
                 height: 180.0,
@@ -110,7 +112,7 @@ class SearchScreen extends StatelessWidget {
                       color: Colors.blue.shade900,
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Text(
                     description,
                     style: TextStyle(
@@ -118,7 +120,7 @@ class SearchScreen extends StatelessWidget {
                       color: Colors.grey.shade700,
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -5,6 +7,7 @@ import 'package:login_signup/screens/forget_passsword_screen.dart';
 import 'package:login_signup/screens/home_page.dart';
 import 'package:login_signup/screens/signup_screen.dart';
 import 'package:login_signup/widgets/custom_scaffold.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import the SharedPreferences package
 import '../theme/theme.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -18,8 +21,40 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formSignInKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool rememberPassword = true;
-  bool isDarkMode = false; // Add this to manage dark mode
+  bool rememberPassword = false;
+  bool isDarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLoginDetails(); // Load login details if available
+  }
+
+  Future<void> _loadLoginDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEmail = prefs.getString('email');
+    final savedPassword = prefs.getString('password');
+
+    if (savedEmail != null && savedPassword != null) {
+      // Pre-fill the email and password fields if data is stored
+      emailController.text = savedEmail;
+      passwordController.text = savedPassword;
+      setState(() {
+        rememberPassword = true; // Automatically check the "Remember me" box
+      });
+    }
+  }
+
+  Future<void> _saveLoginDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (rememberPassword) {
+      await prefs.setString('email', emailController.text);
+      await prefs.setString('password', passwordController.text);
+    } else {
+      await prefs.remove('email');
+      await prefs.remove('password');
+    }
+  }
 
   Future<void> login() async {
     if (_formSignInKey.currentState!.validate()) {
@@ -31,6 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login successful')),
         );
+        await _saveLoginDetails(); // Save login details if "Remember me" is checked
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Home()),

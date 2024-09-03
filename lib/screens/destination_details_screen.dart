@@ -6,7 +6,7 @@ class DestinationDetailsScreen extends StatelessWidget {
   final String destinationCity;
   final String imagePath;
 
-  DestinationDetailsScreen({required this.destinationCity, required this.imagePath});
+  const DestinationDetailsScreen({super.key, required this.destinationCity, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,14 @@ class DestinationDetailsScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               destinationCity,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Add more details about the destination if needed
-            Spacer(),
+            const Spacer(),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -49,11 +49,11 @@ class DestinationDetailsScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('Book Now'),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                child: Text('Book Now'),
               ),
             ),
           ],

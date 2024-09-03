@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,13 +17,13 @@ class ProfileScreen extends StatelessWidget {
     : Future.error('No user data available'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData || !snapshot.data!.exists) {
-            return Center(
+            return const Center(
               child: Text('No profile data found'),
             );
           } else {
@@ -33,12 +35,12 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Full Name: ${data['fullName'] ?? 'Not available'}',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Email: ${FirebaseAuth.instance.currentUser!.email ?? 'Not available'}',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ],
               ),
