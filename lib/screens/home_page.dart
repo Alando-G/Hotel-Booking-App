@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/homescreen.dart';
 import 'package:login_signup/screens/categories.dart';
@@ -5,7 +6,9 @@ import 'package:login_signup/screens/profile.dart';
 import 'package:login_signup/screens/reservation.dart';
 import 'package:login_signup/screens/search.dart'; 
 import 'package:login_signup/screens/payment.dart';
+import 'package:login_signup/screens/signin_screen.dart';
 import 'package:login_signup/screens/view_reservations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -79,13 +82,26 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-            ListTile(
-              title: const Text("Log out"),
-              leading: const Icon(Icons.logout),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+           ListTile(
+  title: const Text("Log out"),
+  leading: const Icon(Icons.logout),
+  onTap: () async {
+    await FirebaseAuth.instance.signOut(); // Firebase sign out
+
+    // Clear saved login details from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('email');
+    await prefs.remove('password');
+
+    // Navigate back to the SignInScreen
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const SignInScreen()),
+      (Route<dynamic> route) => false, // Remove all routes from the stack
+    );
+  },
+),
+
           ],
         ),
       ),
