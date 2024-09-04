@@ -28,7 +28,7 @@ class SearchScreen extends StatelessWidget {
               'Single Room',
               'A cozy room ideal for solo travelers.',
               50.0,
-              'assets/images/single_room.jpg', // Add a relevant image asset
+              'assets/images/single.jpg', // Add a relevant image asset
               RoomCategory.SINGLE,
             ),
             _buildRoomCard(
@@ -52,7 +52,7 @@ class SearchScreen extends StatelessWidget {
               'Deluxe Room',
               'An opulent room with premium features.',
               200.0,
-              'assets/images/deluxe_room.jpg', // Add a relevant image asset
+              'assets/images/delux_room.jpg',
               RoomCategory.DELUXE,
             ),
           ],
@@ -82,7 +82,7 @@ class SearchScreen extends StatelessWidget {
               builder: (context) => ReservationScreen(
                 roomCategory: roomCategory,
                 price: price,
-                userId: '', hotelName: '', roomCategories: const [], // Add the relevant userId logic here
+                userId: '', hotelName: '', roomCategories: const [], 
               ),
             ),
           );

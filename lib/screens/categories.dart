@@ -131,7 +131,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   String getCategoryImage(RoomCategory category) {
     switch (category) {
       case RoomCategory.SINGLE:
-        return 'assets/images/room1.jpg';
+        return 'assets/images/single.jpg';
       case RoomCategory.DOUBLE:
         return 'assets/images/double_room.jpg';
       case RoomCategory.SUITE:
@@ -147,9 +147,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
     switch (category) {
       case RoomCategory.SINGLE:
         return [
-          'assets/images/room1.jpg',
-          'assets/images/single_room_1.jpg',
-          'assets/images/single_room_2.jpg'
+          'assets/images/single.jpg',
+          'assets/images/single.jpg',
+          'assets/images/single.jpg'
         ];
       case RoomCategory.DOUBLE:
         return [
@@ -159,15 +159,15 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ];
       case RoomCategory.SUITE:
         return [
-          'assets/images/suit_room.jpg',
-          'assets/images/suite_room_1.jpg',
-          'assets/images/suite_room_2.jpg'
+          'assets/images/suite.jpg',
+          'assets/images/suite.jpg',
+          'assets/images/suite.jpg'
         ];
       case RoomCategory.DELUXE:
         return [
           'assets/images/delux_room.jpg',
-          'assets/images/deluxe_room_1.jpg',
-          'assets/images/deluxe_room_2.jpg'
+          'assets/images/delux_room.jpg',
+          'assets/images/delux_room.jpg'
         ];
       default:
         return [];
