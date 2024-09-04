@@ -13,7 +13,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _email;
   String? _phoneNumber;
   bool _isEditing = true;
-  String? _imageUrl; // For profile image upload
+  String? _imageUrl; 
 
   void _saveProfile() {
     if (_formKey.currentState!.validate()) {

@@ -119,7 +119,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                       textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    child: Text('Confirm Reservation'),
+                    child: const Text('Confirm Reservation'),
                   ),
                 ),
               ],

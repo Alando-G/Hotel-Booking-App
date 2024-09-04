@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/reservation.dart';
-import 'package:login_signup/screens/room_category.dart'as category;
 
 
 

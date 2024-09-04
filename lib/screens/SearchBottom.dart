@@ -33,7 +33,7 @@ class _SearchBottomNavigationBarScreenState extends State<SearchBottomNavigation
   Widget _getBody(int index) {
     switch (index) {
       case 0:
-        return SearchScreen(); // Replace with your search screen
+        return const SearchScreen(); // Replace with your search screen
       // Add more cases as needed
       default:
         return const Center(child: Text('No screen for this index'));

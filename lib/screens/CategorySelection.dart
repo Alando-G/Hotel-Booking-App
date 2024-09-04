@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/Homescreen.dart';
-import 'package:login_signup/screens/categories.dart';
 import 'package:login_signup/screens/home_page.dart';
 import 'package:login_signup/screens/profile.dart';
 import 'package:login_signup/screens/room_category.dart';
@@ -13,10 +12,10 @@ class _HomeState extends State<Home> {
   final int _currentIndex = 0;
 
   final List<Widget> _children = [
-    HomeScreen(),
-    CategorySelectionScreen(), // New screen for category selection
-    SearchScreen(),
-    ProfileScreen(),
+    const HomeScreen(),
+    const CategorySelectionScreen(), // New screen for category selection
+    const SearchScreen(),
+    const ProfileScreen(),
   ];
   
   @override

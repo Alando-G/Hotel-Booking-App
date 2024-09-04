@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:login_signup/screens/homescreen.dart';
 import 'package:login_signup/screens/categories.dart';
 import 'package:login_signup/screens/profile.dart';
-import 'package:login_signup/screens/reservation.dart';
 import 'package:login_signup/screens/search.dart'; 
 import 'package:login_signup/screens/payment.dart';
 import 'package:login_signup/screens/signin_screen.dart';
@@ -21,10 +20,10 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
-    HomeScreen(),
-    SearchScreen(), // Room selection screen
-    CombinedReservationScreen(userId: '',),
-    ProfileScreen(),
+    const HomeScreen(),
+    const SearchScreen(), // Room selection screen
+    const CombinedReservationScreen(userId: '',),
+    const ProfileScreen(),
   ];
 
   @override
@@ -78,7 +77,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PaymentMethodsScreen()),
+                  MaterialPageRoute(builder: (context) => const PaymentMethodsScreen()),
                 );
               },
             ),

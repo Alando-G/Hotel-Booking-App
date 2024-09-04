@@ -7,10 +7,10 @@ import 'package:login_signup/screens/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:login_signup/screens/hotel_details_screen.dart';
+import 'package:login_signup/screens/hotel_details.dart';
 import 'package:login_signup/screens/offers_screen.dart';
 import 'package:login_signup/screens/destination_details_screen.dart';
-import 'package:login_signup/screens/payment_methods_provider.dart';
+
 
 
 void main() async{

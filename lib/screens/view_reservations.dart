@@ -51,9 +51,9 @@ class _CombinedReservationScreenState extends State<CombinedReservationScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReservationScreen(
+                        builder: (context) => const ReservationScreen(
                           price: 0, // Default price logic
-                          roomCategory: RoomCategory.SINGLE, userId: '', roomCategories: const [], hotelName: '', // Default selection
+                          roomCategory: RoomCategory.SINGLE, userId: '', roomCategories: [], hotelName: '', // Default selection
                         ),
                       ),
                     );

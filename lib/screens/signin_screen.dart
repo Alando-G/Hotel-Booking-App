@@ -69,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
         await _saveLoginDetails(); // Save login details if "Remember me" is checked
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => const Home()),
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

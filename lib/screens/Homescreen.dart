@@ -1,10 +1,48 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/destination_details_screen.dart';
-import 'package:login_signup/screens/hotel_details.dart'; // Import the hotel details screen
-import 'package:login_signup/screens/destination_details_screen.dart'; // Import the destination details screen
+import 'package:login_signup/screens/hotel_details.dart';
+import 'package:login_signup/screens/offers_screen.dart';
+import 'package:login_signup/screens/search.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _autoScrollFeaturedHotels();
+  }
+
+  void _autoScrollFeaturedHotels() {
+    Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      if (_currentPage < 2) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +69,9 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 220,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
+          height: 240, // Adjust as needed
+          child: PageView(
+            controller: _pageController,
             children: <Widget>[
               _buildHotelCard(context, 'Hotel Sunshine', 'assets/images/hotel1.jpg'),
               _buildHotelCard(context, 'Hotel Comfort', 'assets/images/hotel2.jpg'),
@@ -57,32 +95,33 @@ class HomeScreen extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        width: 160,
+        width: 180,
         child: Card(
           elevation: 8,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
-                child: Image.asset(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            child: Stack(
+              children: [
+                Image.asset(
                   imagePath,
                   width: double.infinity,
-                  height: 140,
+                  height: double.infinity,
                   fit: BoxFit.cover,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  name,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Positioned(
+                  bottom: 10,
+                  left: 10,
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -99,20 +138,37 @@ class HomeScreen extends StatelessWidget {
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         const SizedBox(height: 10),
-        _buildOfferCard(context, 'Get 20% off on your first booking', 'Use code: FIRST20', Icons.local_offer, Colors.red),
-        _buildOfferCard(context, 'Weekend Getaway: 15% off', 'Book by this weekend', Icons.beach_access, Colors.blue),
+        _buildOfferCard(
+            context,
+            'Get 20% off on your first booking',
+            'Use code: FIRST20',
+            Icons.local_offer,
+            Colors.red),
+        _buildOfferCard(
+            context,
+            'Weekend Getaway: 15% off',
+            'Book by this weekend',
+            Icons.beach_access,
+            Colors.blue),
       ],
     );
   }
 
-  Widget _buildOfferCard(BuildContext context, String title, String subtitle, IconData icon, Color iconColor) {
+  Widget _buildOfferCard(
+      BuildContext context, String title, String subtitle, IconData icon, Color iconColor) {
     return GestureDetector(
       onTap: () {
-        // Navigate to offers page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>  OffersScreen(),
+          ),
+        );
       },
       child: Card(
         elevation: 4,
         margin: const EdgeInsets.symmetric(vertical: 8.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: ListTile(
           leading: Icon(icon, size: 40, color: iconColor),
           title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -133,15 +189,9 @@ class HomeScreen extends StatelessWidget {
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         const SizedBox(height: 10),
-        GridView.builder(
-          shrinkWrap: true,
+        ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0,
-            childAspectRatio: 1.5,
-          ),
+          shrinkWrap: true,
           itemCount: 4,
           itemBuilder: (context, index) {
             final destinations = [
@@ -150,7 +200,8 @@ class HomeScreen extends StatelessWidget {
               {'city': 'Tokyo', 'image': 'assets/images/tokyo.jpg'},
               {'city': 'London', 'image': 'assets/images/london.jpg'},
             ];
-            return _buildDestinationCard(context, destinations[index]['city']!, destinations[index]['image']!);
+            return _buildDestinationCard(
+                context, destinations[index]['city']!, destinations[index]['image']!);
           },
         ),
       ],
@@ -167,33 +218,42 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
-              child: Image.asset(
-                imagePath,
-                width: double.infinity,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        height: 200,
+        child: Card(
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            child: Stack(
+              children: [
+                Image.asset(
+                  imagePath,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  bottom: 10,
+                  left: 10,
+                  child: Text(
+                    city,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                city,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
+}
+
+class SpecialOffersScreen {
+  const SpecialOffersScreen();
 }

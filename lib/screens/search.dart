@@ -7,16 +7,8 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Search for Rooms",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.blue.shade700,
+      appBar: AppBar(       
+        backgroundColor: const Color.fromARGB(255, 250, 250, 251),
         elevation: 0,
       ),
       body: Padding(
