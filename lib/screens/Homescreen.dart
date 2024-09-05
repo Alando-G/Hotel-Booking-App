@@ -1,9 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/destination_details_screen.dart';
 import 'package:login_signup/screens/hotel_details.dart';
 import 'package:login_signup/screens/offers_screen.dart';
-import 'package:login_signup/screens/search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 240, // Adjust as needed
+          height: 240, 
           child: PageView(
             controller: _pageController,
             children: <Widget>[

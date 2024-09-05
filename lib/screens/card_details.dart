@@ -18,7 +18,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
   final _googlePayNumberController = TextEditingController();
 
   void _saveCardDetails() {
-    // Simulate saving details and navigate back
+    
     Navigator.of(context).pop(); 
   }
 

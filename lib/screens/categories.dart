@@ -79,7 +79,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
-                    // Inverted rectangle overlay with details
+                    // Inverted rectangle
                     Positioned.fill(
                       child: Align(
                         alignment: Alignment.bottomCenter,

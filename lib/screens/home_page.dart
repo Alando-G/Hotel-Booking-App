@@ -1,10 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_signup/screens/homescreen.dart';
+import 'package:login_signup/screens/Homescreen.dart';
 import 'package:login_signup/screens/categories.dart';
-import 'package:login_signup/screens/profile.dart';
-import 'package:login_signup/screens/search.dart'; 
 import 'package:login_signup/screens/payment.dart';
+import 'package:login_signup/screens/profile.dart';
+import 'package:login_signup/screens/search.dart';
 import 'package:login_signup/screens/signin_screen.dart';
 import 'package:login_signup/screens/view_reservations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,8 +23,8 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _children = [
     const HomeScreen(),
-    const SearchScreen(), // Room selection screen
-    const CombinedReservationScreen(userId: '',),
+    const SearchScreen(),
+    const CombinedReservationScreen(userId: ''),
     const ProfileScreen(),
   ];
 
@@ -32,17 +34,35 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color.fromARGB(255, 244, 244, 243),
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: const Color.fromARGB(188, 250, 155, 217),
+        backgroundColor: Colors.blueAccent,
+        elevation: 4.0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              // Handle notifications
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Color.fromARGB(188, 250, 155, 217),
+                color: Colors.blueAccent,
               ),
-              child: Text('Alztec'),
+              currentAccountPicture: CircleAvatar(
+                child: const Icon(Icons.person, size: 40),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.blueAccent,
+              ),
+              accountName: null, // Removed name
+              accountEmail: Text(
+                FirebaseAuth.instance.currentUser?.email ?? 'No Email',
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
             ListTile(
               title: const Text("Home"),
@@ -67,7 +87,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
-                  _currentIndex = 1;
+                  _currentIndex = 2;
                 });
               },
             ),
@@ -81,26 +101,25 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-           ListTile(
-  title: const Text("Log out"),
-  leading: const Icon(Icons.logout),
-  onTap: () async {
-    await FirebaseAuth.instance.signOut(); // Firebase sign out
+            ListTile(
+              title: const Text("Log out"),
+              leading: const Icon(Icons.logout),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut(); // Firebase sign out
 
-    // Clear saved login details from SharedPreferences
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('email');
-    await prefs.remove('password');
+                // Clear saved login details from SharedPreferences
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.remove('email');
+                await prefs.remove('password');
 
-    // Navigate back to the SignInScreen
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const SignInScreen()),
-      (Route<dynamic> route) => false, // Remove all routes from the stack
-    );
-  },
-),
-
+                // Navigate back to the SignInScreen
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                  (Route<dynamic> route) => false, // Remove all routes from the stack
+                );
+              },
+            ),
           ],
         ),
       ),

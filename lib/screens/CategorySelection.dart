@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, unused_field, library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/Homescreen.dart';
@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
   
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    
     throw UnimplementedError();
   }
 

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:login_signup/screens/signin_screen.dart';
-import '../theme/theme.dart'; // Import your project's theme file
+import '../theme/theme.dart'; 
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});

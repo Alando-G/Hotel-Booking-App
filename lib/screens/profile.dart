@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,18 +16,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _name;
   String? _email;
   String? _phoneNumber;
-  bool _isEditing = true;
-  String? _imageUrl; 
+  bool _isEditing = false;
+  String? _imageUrl;
 
-  void _saveProfile() {
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _email = user.email;
+        _imageUrl = user.photoURL;
+      });
+
+      // Fetch additional user data from Firestore
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final data = doc.data();
+      if (data != null) {
+        setState(() {
+          _name = data['name'];
+          _phoneNumber = data['phoneNumber'];
+        });
+      }
+    }
+  }
+
+  Future<void> _saveProfile() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      setState(() {
-        _isEditing = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated!')),
-      );
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // Save user data to Firestore
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'name': _name,
+          'email': _email,
+          'phoneNumber': _phoneNumber,
+        }, SetOptions(merge: true));
+
+        setState(() {
+          _isEditing = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated!')),
+        );
+      }
     }
   }
 
@@ -33,6 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('Profile'),
         centerTitle: true,
+        backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -48,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Create Profile',
+            'Edit Profile',
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 30),
@@ -122,6 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildTextField(String label, Function(String?) onSaved) {
     return TextFormField(
+      initialValue: label == 'Name' ? _name : label == 'Email' ? _email : _phoneNumber,
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
